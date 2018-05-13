@@ -46,32 +46,37 @@ var MineSweeper = (function ($) {
       var squaresRevealed = gameData.squares_revealed;
       var squaresFlagged  = gameData.squares_flagged;
 
-      console.log("minesPositions: " + minesPositions);
-      console.log("squaresRevealed: " + squaresRevealed);
-
       var gameTable = $("#game");
       gameTable.html("");
 
-      var hash = {};
+      var mines = {};
       for(var i = 0 ; i < minesPositions.length; i += 1) {
-        hash[minesPositions[i]] = i;
+        mines[minesPositions[i]] = i;
+      }
+
+      var revealed = {};
+      for(var i = 0 ; i < squaresRevealed.length; i += 1) {
+        revealed[squaresRevealed[i]] = i;
       }
 
       for (var i = 0; i < rows; i++) {
         var row = $('<tr></tr>').appendTo(gameTable);
         for (var j = 0; j < columns; j++) {
 
-          // check if square(i,j) is included within minesPositions array
-          if(hash.hasOwnProperty([i,j])) {
-            // square contains bomb
-            $("<td class='alert callout'></td>").text("X").appendTo(row);
+          // check if square(i,j) has been revealed
+          if (revealed.hasOwnProperty([i,j])) {
+            // check if square(i,j) contains a bomb
+            if(mines.hasOwnProperty([i,j])) {
+              $("<td class='alert callout'></td>").text("x").appendTo(row);
+            } else {
+              $("<td data-behavior='square' data-game-id=" + gameData.id + " data-row=" + i + " data-column=" + j +" class='secondary callout'></td>").text("").appendTo(row);
+            }
           } else {
             // square unrevealed
             $("<td data-behavior='square' data-game-id=" + gameData.id + " data-row=" + i + " data-column=" + j +" class='callout'></td>").text("").appendTo(row);
           }
         }
       }
-      // console.log("gameTable:" + gameTable.html());
     },
 
     // `action` param possible values: `reveal`, `question_mark` or `red_flag`
