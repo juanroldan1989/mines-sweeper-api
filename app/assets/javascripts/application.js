@@ -13,3 +13,4 @@
 //= require jquery
 //= require jquery_ujs
 //= require mines_sweeper_client
+//= require custom
