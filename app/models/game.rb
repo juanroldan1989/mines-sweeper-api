@@ -1,5 +1,5 @@
 class Game < ActiveRecord::Base
-  validates :rows, :columns, :mines, presence: true
+  validates :rows, :columns, :mines, numericality: { greater_than: 0 }
 
   before_create :generate_mines_positions
 
