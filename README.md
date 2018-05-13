@@ -1,5 +1,5 @@
 <div align="left">
-  <a href="https://github.com/juanroldan1989/mines-sweeper-api"><img width="250" src="https://github.com/juanroldan1989/mines-sweeper-api/raw/master/app/assets/images/login.png" alt="login-app logo" /></a>
+  <a href="https://github.com/juanroldan1989/mines-sweeper-api"><img width="250" src="https://d30y9cdsu7xlg0.cloudfront.net/png/206685-200.png" alt="login-app logo" /></a>
 </div>
 
 # MineSweeper API & JS Library
@@ -49,3 +49,31 @@ $ rails s
 
 ### Live app
 - https://mines-sweeper-api.herokuapp.com/
+
+
+### Testing steps
+
+1. Access `testing` area where JS Library will be loaded within the page.
+
+2. `Create` a game:
+```javascript
+MineSweeper.createGame(10,10,4);
+```
+
+3. `Fetch` a game to play:
+```javascript
+MineSweeper.getGame(1);
+```
+
+4. Start clicking around and revealing squares : )
+
+```javascript
+MineSweeper.updateSquare(1, 10, 8, 'reveal');
+MineSweeper.updateSquare(1, 5, 2, 'question_mark');
+```
+
+4. a) Square revealed doesn't contain a bomb, phew !
+4. b) Square revealed contains a bomb! (game over, clicking around doesn't make any changes in the server side)
+4. c) Squares can be flagged with a `question mark` (by clicking with the right button mouse).
+
+Enjoy !
