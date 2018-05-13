@@ -59,18 +59,29 @@ var MineSweeper = (function ($) {
         revealed[squaresRevealed[i]] = i;
       }
 
+      var flagged = {};
+      for(var i = 0 ; i < squaresFlagged.length; i += 1) {
+        flagged[squaresFlagged[i]] = i;
+      }
+
       for (var i = 0; i < rows; i++) {
         var row = $('<tr></tr>').appendTo(gameTable);
         for (var j = 0; j < columns; j++) {
 
           // check if square(i,j) has been revealed
           if (revealed.hasOwnProperty([i,j])) {
+
             // check if square(i,j) contains a bomb
             if(mines.hasOwnProperty([i,j])) {
               $("<td class='alert callout'></td>").text("x").appendTo(row);
             } else {
               $("<td data-behavior='square' data-game-id=" + gameData.id + " data-row=" + i + " data-column=" + j +" class='secondary callout'></td>").text("").appendTo(row);
             }
+
+          } else if (flagged.hasOwnProperty([i,j])) {
+            // square flagged with question mark
+            $("<td data-behavior='square' data-game-id=" + gameData.id + " data-row=" + i + " data-column=" + j +" class='callout'></td>").text("?").appendTo(row);
+
           } else {
             // square unrevealed
             $("<td data-behavior='square' data-game-id=" + gameData.id + " data-row=" + i + " data-column=" + j +" class='callout'></td>").text("").appendTo(row);
