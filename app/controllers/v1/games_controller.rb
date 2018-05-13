@@ -5,7 +5,9 @@ module V1
       game = Game.create(resource_params)
 
       if game.valid?
-        render json: { status: 200, id: game.id }
+        render json: game.as_json(only:
+                  [:id, :rows, :columns, :mines, :mines_positions, :squares_revealed, :squares_flagged]
+                ).merge({ status: 200, started_at: game.created_at, stopped_at: game.stopped_at, status: game.status_name })
       else
         render json: { status: 400, message: "Game can't be created", errors: game.errors.full_messages }
       end
@@ -17,7 +19,7 @@ module V1
       if game.present?
         render json: game.as_json(only:
           [:id, :rows, :columns, :mines, :mines_positions, :squares_revealed, :squares_flagged]
-        ).merge({ started_at: game.created_at, stopped_at: game.stopped_at, status: game.status_name })
+        ).merge({ status: 200, started_at: game.created_at, stopped_at: game.stopped_at, status: game.status_name })
       else
         render json: { status: 404, message: "Game not found" }
       end
